@@ -30,6 +30,30 @@ class Genre(models.Model):
                 violation_error_message = "Genre already exists (case insensitive match)"
             ),
         ]
+
+class Language(models.Model):
+    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
+    name = models.CharField(max_length=200,
+                            unique=True,
+                            help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)")
+
+    def get_absolute_url(self):
+        """Returns the url to access a particular language instance."""
+        return reverse('language-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String for representing the Model object (in Admin site etc.)"""
+        return self.name
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                Lower('name'),
+                name='language_name_case_insensitive_unique',
+                violation_error_message = "Language already exists (case insensitive match)"
+            ),
+        ]
+
 class Book(models.Model):
     """Model representing a book (but not a specific copy of a book)."""
     title = models.CharField(max_length=200)
@@ -48,6 +72,8 @@ class Book(models.Model):
     # Genre class has already been defined so we can specify the object above.
     genre = models.ManyToManyField(
         Genre, help_text="Select a genre for this book")
+    
+    
 
     def __str__(self):
         """String for representing the Model object."""
