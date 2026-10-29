@@ -74,7 +74,7 @@ class Book(models.Model):
         Genre, help_text="Select a genre for this book")
     language = models.ForeignKey('Language', on_delete=models.RESTRICT, null=True)
 
-    def __str__(self):
+    def __str_(self):
         """String for representing the Model object."""
         return self.title
 
@@ -122,6 +122,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ['due_back']
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         """String for representing the Model object."""
