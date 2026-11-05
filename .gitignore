@@ -226,3 +226,5 @@ __marimo__/
 
 # Python virtual environment
 .venv/
+
+media/
